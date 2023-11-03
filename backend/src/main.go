@@ -1,20 +1,21 @@
 package main
 
 import (
-	"fmt"
+	"casino/deck"
+	"casino/handlers"
 	"net/http"
 )
 
 func main() {
-	// HTTPハンドラ関数を定義
-	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello, Casino!")
+	new_Deck := deck.NewDeck()
+	new_Deck.Shuffle()
+
+	http.HandleFunc("/create_new_player", func(w http.ResponseWriter, r *http.Request) {
+		handlers.Createnewplayerhandler(w, r)
+	})
+	http.HandleFunc("/draw", func(w http.ResponseWriter, r *http.Request) {
+		handlers.Drawcardhandler(w, r, &new_Deck)
 	})
 
-	// サーバーを指定のポートで起動
-	port := ":8080" // ポート番号を必要に応じて変更
-	fmt.Printf("Starting server on port %s...\n", port)
-	if err := http.ListenAndServe(port, nil); err != nil {
-		fmt.Printf("Server error: %v\n", err)
-	}
+	http.ListenAndServe("localhost:8080", nil)
 }
