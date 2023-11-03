@@ -1,8 +1,8 @@
 package main
 
 import (
-	"casino/deck"
 	"casino/handlers"
+	"casino/model/deck"
 	"net/http"
 )
 
@@ -11,10 +11,10 @@ func main() {
 	new_Deck.Shuffle()
 
 	http.HandleFunc("/create_new_player", func(w http.ResponseWriter, r *http.Request) {
-		handlers.Createnewplayerhandler(w, r)
+		handlers.CreateNewPlayerHandler(w, r, new_Deck)
 	})
 	http.HandleFunc("/draw", func(w http.ResponseWriter, r *http.Request) {
-		handlers.Drawcardhandler(w, r, &new_Deck)
+		handlers.DrawCardHandler(w, r, new_Deck)
 	})
 
 	http.ListenAndServe("localhost:8080", nil)
