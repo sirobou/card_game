@@ -1,0 +1,28 @@
+version: "3"
+services:
+  backend:
+    container_name: casino-backend
+    build:
+      context: ./backend
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./src:/app/src
+    tty: true 
+    networks:
+      - casino-net
+
+  frontend:
+    container_name: casino-frontend
+    build:
+      context: ./frontend
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./src:/app/src
+    tty: true 
+    networks:
+      - casino-net
+
+networks:
+  casino-net:
