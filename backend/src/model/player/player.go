@@ -4,17 +4,29 @@ import (
 	"casino/model/card"
 	"casino/model/card/rank"
 	"casino/model/deck"
-	"casino/model/player/id"
 )
 
 type Player struct {
-	Id   id.PlayerId
-	Hand []*card.Card
+	Id     PlayerId
+	Name   PlayerName
+	IsJoin bool
+	IsFold bool
+	Hand   []*card.Card
 }
 
-func NewPlayer(d *deck.Deck) Player {
-	player := Player{Id: 1, Hand: d.InitialHand()}
-	return player
+func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
+	playerName, err := NewPlayerName(name)
+	if err != nil {
+		return nil, err
+	}
+	player := Player{
+		Id:     id,
+		Name:   playerName,
+		IsJoin: false,
+		IsFold: false,
+		Hand:   deck.InitialHand(),
+	}
+	return &player, nil
 }
 
 func (p *Player) GetHandTotal() int {
