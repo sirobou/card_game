@@ -50,6 +50,9 @@ func (g *Game) Hit(id player.PlayerId) error {
 			if p.IsFold {
 				return errors.New("player already folded")
 			}
+			if p.IsBurst() {
+				return errors.New("player already bursted")
+			}
 			p.Hand = append(p.Hand, g.Deck.Draw())
 		}
 	}
@@ -62,8 +65,15 @@ func (g *Game) Fold(id player.PlayerId) error {
 			if p.IsFold {
 				return errors.New("player already folded")
 			}
+			if p.IsBurst() {
+				return errors.New("player already bursted")
+			}
 			p.IsFold = true
 		}
 	}
 	return nil
+}
+
+func (g *Game) Join(p *player.Player) {
+	g.Players = append(g.Players, p)
 }

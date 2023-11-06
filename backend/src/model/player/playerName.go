@@ -1,13 +1,18 @@
 package player
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+	"unicode/utf8"
+)
 
 type PlayerName struct {
 	Value string
 }
 
 func NewPlayerName(value string) (PlayerName, error) {
-	if len(value) < 1 || len(value) > 16 {
+	if utf8.RuneCountInString(value) < 1 || utf8.RuneCountInString(value) > 16 {
+		fmt.Println(len(value))
 		return PlayerName{""}, errors.New("invalid name length")
 	}
 	return PlayerName{value}, nil

@@ -1,17 +1,18 @@
 package player
 
 import (
+	"casino/consts"
 	"casino/model/card"
 	"casino/model/card/rank"
 	"casino/model/deck"
 )
 
 type Player struct {
-	Id     PlayerId
-	Name   PlayerName
-	IsJoin bool
-	IsFold bool
-	Hand   []*card.Card
+	Id      PlayerId
+	Name    PlayerName
+	InTable bool
+	IsFold  bool
+	Hand    []*card.Card
 }
 
 func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
@@ -20,11 +21,11 @@ func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
 		return nil, err
 	}
 	player := Player{
-		Id:     id,
-		Name:   playerName,
-		IsJoin: false,
-		IsFold: false,
-		Hand:   deck.InitialHand(),
+		Id:      id,
+		Name:    playerName,
+		InTable: false,
+		IsFold:  false,
+		Hand:    deck.InitialHand(),
 	}
 	return &player, nil
 }
@@ -36,14 +37,18 @@ func (p *Player) GetHandTotal() int {
 		case rank.Ten, rank.Jack, rank.Queen, rank.King:
 			hand_total += 10
 		case rank.Ace:
-			if hand_total+10 < 22 {
-				hand_total += 10
+			if hand_total+11 > consts.BURST_THRESHHOLD {
+				hand_total += 1
 			} else {
-				hand_total += 10
+				hand_total += 11
 			}
 		default:
 			hand_total += int(card.Rank)
 		}
 	}
 	return hand_total
+}
+
+func (p *Player) IsBurst() bool {
+	return p.GetHandTotal() > consts.BURST_THRESHHOLD
 }

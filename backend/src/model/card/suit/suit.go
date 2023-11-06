@@ -9,7 +9,7 @@ const (
 	Clubs
 )
 
-func ConvertToString(suit Suit) string {
+func ConvertSuitToString(suit Suit) string {
 	switch suit {
 	case Hearts:
 		return "Hearts"

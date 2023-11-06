@@ -4,12 +4,12 @@ import (
 	"casino/model/game"
 	"casino/model/player"
 	"encoding/json"
-	"io/ioutil"
+	"io"
 	"net/http"
 )
 
 func ActionHandler(w http.ResponseWriter, r *http.Request, g *game.Game) {
-	body, err := ioutil.ReadAll(r.Body)
+	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
 		return
