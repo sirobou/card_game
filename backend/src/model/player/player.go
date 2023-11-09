@@ -10,7 +10,7 @@ import (
 type Player struct {
 	Id      PlayerId
 	Name    PlayerName
-	InTable bool
+	InRound bool
 	IsFold  bool
 	Hand    []*card.Card
 }
@@ -23,7 +23,7 @@ func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
 	player := Player{
 		Id:      id,
 		Name:    playerName,
-		InTable: false,
+		InRound: false,
 		IsFold:  false,
 		Hand:    deck.InitialHand(),
 	}

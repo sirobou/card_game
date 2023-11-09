@@ -20,7 +20,7 @@ func (pc *PlayerConverter) Convert(originalPlayer *player.Player) *ConvertedPlay
 			},
 		)
 	}
-	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name, originalPlayer.InTable, originalPlayer.IsFold, convertedHand)
+	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name, originalPlayer.InRound, originalPlayer.IsFold, convertedHand)
 }
 
 type ConvertedCard struct {
