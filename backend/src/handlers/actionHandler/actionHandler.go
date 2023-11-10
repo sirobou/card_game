@@ -23,6 +23,12 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.R
 	action := requestData.Action
 	id := requestData.Id
 
+	err = currentRound.IsPlayerTurn(id)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
 	switch action {
 	case "hit":
 		err := currentRound.Hit(id)
