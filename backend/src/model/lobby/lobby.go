@@ -37,3 +37,7 @@ func (l *Lobby) GenerateUniquePlayerId() player.PlayerId {
 func (l *Lobby) Join(p *player.Player) {
 	l.Players = append(l.Players, p)
 }
+
+func (l *Lobby) StartRound() *round.Round {
+	return round.NewRound(l.Players)
+}

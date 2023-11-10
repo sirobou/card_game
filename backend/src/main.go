@@ -3,34 +3,35 @@ package main
 import (
 	"casino/handlers/actionHandler"
 	"casino/handlers/createNewPlayerHandler"
-	getgamehandler "casino/handlers/getGameHandler.go"
 	"casino/handlers/getPlayerHandler"
-	"casino/model/game"
+	"casino/handlers/getRoundHandler.go"
+	"casino/handlers/startRoundHandler"
+	"casino/model/lobby"
 	"casino/model/player"
 	"fmt"
 	"net/http"
 )
 
 func main() {
-	game := game.CreateNewGame()
-	game.Deck.Shuffle()
-
-	http.HandleFunc("/api/game/join", func(w http.ResponseWriter, r *http.Request) {
-		createNewPlayerHandler.CreateNewPlayerHandler(w, r, game)
-		for _, p := range game.Players {
-			fmt.Println(p.Name)
-		}
+	lobby := lobby.NewLobby()
+	http.HandleFunc("/api/lobby/join", func(w http.ResponseWriter, r *http.Request) {
+		createNewPlayerHandler.CreateNewPlayerHandler(w, r, lobby)
+		fmt.Println(lobby.Players)
 	})
-	http.HandleFunc("/api/player/action", func(w http.ResponseWriter, r *http.Request) {
-		actionHandler.ActionHandler(w, r, game)
+	http.HandleFunc("/api/lobby/start", func(w http.ResponseWriter, r *http.Request) {
+		startRoundHandler.StartRoundHandler(w, r, lobby)
+		fmt.Println(lobby.Round.Players)
 	})
-	http.HandleFunc("/api/game/player", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/api/round/action", func(w http.ResponseWriter, r *http.Request) {
+		actionHandler.ActionHandler(w, r, lobby.Round)
+	})
+	http.HandleFunc("/api/round/player", func(w http.ResponseWriter, r *http.Request) {
 		queryParams := r.URL.Query()
 		playerId := queryParams.Get("id")
-		getPlayerHandler.GetPlayerHandler(w, r, player.PlayerId(playerId), game)
+		getPlayerHandler.GetPlayerHandler(w, r, player.PlayerId(playerId), lobby.Round)
 	})
-	http.HandleFunc("/api/game", func(w http.ResponseWriter, r *http.Request) {
-		getgamehandler.GetGameHandler(w, r, game)
+	http.HandleFunc("/api/round", func(w http.ResponseWriter, r *http.Request) {
+		getRoundHandler.GetRoundHandler(w, r, lobby.Round)
 	})
 	http.ListenAndServe("localhost:8080", nil)
 }

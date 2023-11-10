@@ -1,24 +1,25 @@
-package createnewgamehandler
+package createNewRoundHandler
 
 import (
-	"casino/model/game"
+	"casino/model/lobby"
+	"casino/model/round"
 	"encoding/json"
 	"fmt"
 	"net/http"
 )
 
-func CreateNewGameHandler(w http.ResponseWriter, r *http.Request) *game.Game {
+func CreateNewRoundHandler(w http.ResponseWriter, r *http.Request, l lobby.Lobby) *round.Round {
 	if r.Method == http.MethodGet {
-		NewGame := game.CreateNewGame()
+		NewRound := round.NewRound(l.Players)
 
-		CreateJsonResponseFromNewGame(w, *NewGame)
-		return NewGame
+		CreateJsonResponseFromNewGame(w, *NewRound)
+		return NewRound
 	}
 	return nil
 }
 
-func CreateJsonResponseFromNewGame(w http.ResponseWriter, game game.Game) {
-	jsonData, err := json.Marshal(game)
+func CreateJsonResponseFromNewGame(w http.ResponseWriter, round round.Round) {
+	jsonData, err := json.Marshal(round)
 	if err != nil {
 		fmt.Println("JSONエンコードエラー:", err)
 		return

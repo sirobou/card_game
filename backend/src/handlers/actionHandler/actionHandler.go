@@ -1,14 +1,14 @@
 package actionHandler
 
 import (
-	"casino/model/game"
 	"casino/model/player"
+	"casino/model/round"
 	"encoding/json"
 	"io"
 	"net/http"
 )
 
-func ActionHandler(w http.ResponseWriter, r *http.Request, g *game.Game) {
+func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.Round) {
 	body, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Error reading request body", http.StatusInternalServerError)
@@ -25,7 +25,7 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, g *game.Game) {
 
 	switch action {
 	case "hit":
-		err := g.Hit(id)
+		err := currentRound.Hit(id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -34,7 +34,7 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, g *game.Game) {
 		return
 
 	case "fold":
-		err := g.Fold(id)
+		err := currentRound.Fold(id)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return

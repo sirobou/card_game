@@ -3,7 +3,7 @@ package createNewPlayerHandler
 import (
 	"casino/handlers/converter"
 	"casino/handlers/serializer"
-	"casino/model/game"
+	"casino/model/lobby"
 	"casino/model/player"
 	"encoding/json"
 	"fmt"
@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func CreateNewPlayerHandler(w http.ResponseWriter, r *http.Request, g *game.Game) {
+func CreateNewPlayerHandler(w http.ResponseWriter, r *http.Request, l *lobby.Lobby) {
 	if r.Method == http.MethodPost {
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
@@ -25,14 +25,13 @@ func CreateNewPlayerHandler(w http.ResponseWriter, r *http.Request, g *game.Game
 			return
 		}
 		name := requestData.Name
-		newPlayer, err := player.NewPlayer(g.Deck, name, g.GenerateUniquePlayerId())
+		newPlayer, err := player.NewPlayer(name, l.GenerateUniquePlayerId())
 		if err != nil {
 			fmt.Println("Error:", err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
 			return
 		}
-		g.Join(newPlayer)
-		fmt.Println(*newPlayer.Hand[1])
+		l.Join(newPlayer)
 		CreateJsonResponseFromNewPlayer(w, *newPlayer)
 	}
 }

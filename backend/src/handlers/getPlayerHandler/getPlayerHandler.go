@@ -3,16 +3,16 @@ package getPlayerHandler
 import (
 	"casino/handlers/converter"
 	"casino/handlers/serializer"
-	"casino/model/game"
 	"casino/model/player"
+	"casino/model/round"
 	"fmt"
 	"net/http"
 )
 
-func GetPlayerHandler(w http.ResponseWriter, r *http.Request, playerId player.PlayerId, Game *game.Game) {
+func GetPlayerHandler(w http.ResponseWriter, r *http.Request, playerId player.PlayerId, round *round.Round) {
 	if r.Method == http.MethodGet {
 		fmt.Println(playerId)
-		player, err := Game.GetPlayer(playerId)
+		player, err := round.GetPlayer(playerId)
 		if err != nil {
 			fmt.Println("Error:", err.Error())
 		} else {

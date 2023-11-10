@@ -4,7 +4,6 @@ import (
 	"casino/consts"
 	"casino/model/card"
 	"casino/model/card/rank"
-	"casino/model/deck"
 )
 
 type Player struct {
@@ -15,7 +14,7 @@ type Player struct {
 	Hand    []*card.Card
 }
 
-func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
+func NewPlayer(name string, id PlayerId) (*Player, error) {
 	playerName, err := NewPlayerName(name)
 	if err != nil {
 		return nil, err
@@ -25,10 +24,25 @@ func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
 		Name:    playerName,
 		InRound: false,
 		IsFold:  false,
-		Hand:    deck.InitialHand(),
+		Hand:    []*card.Card{},
 	}
 	return &player, nil
 }
+
+// func NewPlayer(deck *deck.Deck, name string, id PlayerId) (*Player, error) {
+// 	playerName, err := NewPlayerName(name)
+// 	if err != nil {
+// 		return nil, err
+// 	}
+// 	player := Player{
+// 		Id:      id,
+// 		Name:    playerName,
+// 		InRound: false,
+// 		IsFold:  false,
+// 		Hand:    deck.InitialHand(),
+// 	}
+// 	return &player, nil
+// }
 
 func (p *Player) GetHandTotal() int {
 	hand_total := 0

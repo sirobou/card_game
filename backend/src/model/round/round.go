@@ -4,26 +4,32 @@ import (
 	"casino/model/deck"
 	"casino/model/player"
 	"errors"
+	"fmt"
 )
 
 type Round struct {
 	Deck          *deck.Deck
-	currentPlayer player.PlayerId
+	CurrentPlayer player.PlayerId
 	Players       []*player.Player
 }
 
 func NewRound(players []*player.Player) *Round {
+	fmt.Println(players)
 	round := Round{
 		Deck: deck.NewDeck(),
 		//TODO currentPlayer
 		Players: players,
 	}
+	round.Deck.Shuffle()
 	return &round
 }
 
 func (r *Round) GetPlayer(playerId player.PlayerId) (*player.Player, error) {
+	fmt.Println("works")
+	fmt.Println(r.Players)
 	for _, player := range r.Players {
 		if player.Id == playerId {
+
 			return player, nil
 		}
 	}
