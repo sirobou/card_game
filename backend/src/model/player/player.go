@@ -10,7 +10,7 @@ type Player struct {
 	Id      PlayerId
 	Name    PlayerName
 	InRound bool
-	IsFold  bool
+	IsStand bool
 	Hand    []*card.Card
 }
 
@@ -23,7 +23,7 @@ func NewPlayer(name string, id PlayerId) (*Player, error) {
 		Id:      id,
 		Name:    playerName,
 		InRound: false,
-		IsFold:  false,
+		IsStand: false,
 		Hand:    []*card.Card{},
 	}
 	return &player, nil
@@ -38,7 +38,7 @@ func NewPlayer(name string, id PlayerId) (*Player, error) {
 // 		Id:      id,
 // 		Name:    playerName,
 // 		InRound: false,
-// 		IsFold:  false,
+// 		IsStand:  false,
 // 		Hand:    deck.InitialHand(),
 // 	}
 // 	return &player, nil
@@ -51,7 +51,7 @@ func (p *Player) GetHandTotal() int {
 		case rank.Ten, rank.Jack, rank.Queen, rank.King:
 			hand_total += 10
 		case rank.Ace:
-			if hand_total+11 > consts.BURST_THRESHHOLD {
+			if hand_total+11 > consts.BUST_THRESHHOLD {
 				hand_total += 1
 			} else {
 				hand_total += 11
@@ -63,6 +63,6 @@ func (p *Player) GetHandTotal() int {
 	return hand_total
 }
 
-func (p *Player) IsBurst() bool {
-	return p.GetHandTotal() > consts.BURST_THRESHHOLD
+func (p *Player) IsBust() bool {
+	return p.GetHandTotal() > consts.BUST_THRESHHOLD
 }

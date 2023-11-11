@@ -3,6 +3,7 @@ package actionHandler
 import (
 	"casino/model/player"
 	"casino/model/round"
+	"casino/model/round/action"
 	"encoding/json"
 	"io"
 	"net/http"
@@ -20,7 +21,7 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.R
 		http.Error(w, "Error parsing JSON data", http.StatusBadRequest)
 		return
 	}
-	action := requestData.Action
+	requestAction := requestData.Action
 	id := requestData.Id
 
 	err = currentRound.IsPlayerTurn(id)
@@ -29,9 +30,9 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.R
 		return
 	}
 
-	switch action {
+	switch requestAction {
 	case "hit":
-		err := currentRound.Hit(id)
+		err := currentRound.Action(id, action.Hit)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -39,8 +40,8 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.R
 		w.WriteHeader(http.StatusOK)
 		return
 
-	case "fold":
-		err := currentRound.Fold(id)
+	case "stand":
+		err := currentRound.Action(id, action.Stand)
 		if err != nil {
 			http.Error(w, err.Error(), http.StatusBadRequest)
 			return
@@ -48,7 +49,7 @@ func ActionHandler(w http.ResponseWriter, r *http.Request, currentRound *round.R
 		w.WriteHeader(http.StatusOK)
 		return
 	default:
-		http.Error(w, "action only accept 'hit' or 'fold'", http.StatusBadRequest)
+		http.Error(w, "action only accept 'hit' or 'stand'", http.StatusBadRequest)
 		return
 	}
 }

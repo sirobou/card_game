@@ -1,3 +1,4 @@
 package consts
 
-const BURST_THRESHHOLD int = 21
+const BUST_THRESHHOLD int = 21
+const DEALER_STAND_THRESHHOLD = 17

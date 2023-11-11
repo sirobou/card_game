@@ -11,7 +11,6 @@ import (
 
 func GetPlayerHandler(w http.ResponseWriter, r *http.Request, playerId player.PlayerId, round *round.Round) {
 	if r.Method == http.MethodGet {
-		fmt.Println(playerId)
 		player, err := round.GetPlayer(playerId)
 		if err != nil {
 			fmt.Println("Error:", err.Error())

@@ -10,17 +10,14 @@ type PlayerConverter struct {
 }
 
 func (pc *PlayerConverter) Convert(originalPlayer *player.Player) *ConvertedPlayer {
-	convertedHand := []ConvertedCard{}
+	convertedHand := []*ConvertedCard{}
 	for _, card := range originalPlayer.Hand {
 		convertedHand = append(
 			convertedHand,
-			ConvertedCard{
-				suit.ConvertSuitToString(card.Suit),
-				rank.ConvertRankToString(card.Rank),
-			},
+			NewConvertedCard(suit.ConvertSuitToString(card.Suit), rank.ConvertRankToString(card.Rank)),
 		)
 	}
-	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name, originalPlayer.InRound, originalPlayer.IsFold, convertedHand)
+	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name.Value, originalPlayer.InRound, originalPlayer.IsStand, convertedHand, originalPlayer.IsBust())
 }
 
 type ConvertedCard struct {
@@ -30,10 +27,11 @@ type ConvertedCard struct {
 
 type ConvertedPlayer struct {
 	Id      player.PlayerId
-	Name    player.PlayerName
+	Name    string
 	InTable bool
-	IsFold  bool
-	Hand    []ConvertedCard
+	IsStand bool
+	Hand    []*ConvertedCard
+	IsBust  bool
 }
 
 func NewPlayerConverter() *PlayerConverter {
@@ -42,16 +40,25 @@ func NewPlayerConverter() *PlayerConverter {
 
 func NewConvertedPlayer(
 	id player.PlayerId,
-	name player.PlayerName,
+	name string,
 	inTable bool,
-	isFold bool,
-	hand []ConvertedCard,
+	isStand bool,
+	hand []*ConvertedCard,
+	isBust bool,
 ) *ConvertedPlayer {
 	return &ConvertedPlayer{
 		Name:    name,
 		Id:      id,
 		InTable: inTable,
-		IsFold:  isFold,
+		IsStand: isStand,
 		Hand:    hand,
+		IsBust:  isBust,
+	}
+}
+
+func NewConvertedCard(suit string, rank string) *ConvertedCard {
+	return &ConvertedCard{
+		suit,
+		rank,
 	}
 }
