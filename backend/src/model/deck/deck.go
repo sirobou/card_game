@@ -13,7 +13,7 @@ type Deck struct {
 
 func NewDeck() *Deck {
 	deck := Deck{}
-	suits := [4]suit.Suit{suit.Hearts, suit.Diamonds, suit.Spades, suit.Spades}
+	suits := [4]suit.Suit{suit.Hearts, suit.Diamonds, suit.Spades, suit.Clubs}
 	ranks := [13]rank.Rank{rank.Ace, rank.Two, rank.Three, rank.Four, rank.Five, rank.Six, rank.Seven, rank.Eight, rank.Nine, rank.Ten, rank.Jack, rank.Queen, rank.King}
 
 	for _, suit := range suits {

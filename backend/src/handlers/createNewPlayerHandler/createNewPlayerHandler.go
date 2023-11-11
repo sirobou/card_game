@@ -1,6 +1,7 @@
 package createNewPlayerHandler
 
 import (
+	"casino/consts"
 	"casino/handlers/converter"
 	"casino/handlers/serializer"
 	"casino/model/lobby"
@@ -16,6 +17,10 @@ func CreateNewPlayerHandler(w http.ResponseWriter, r *http.Request, l *lobby.Lob
 		body, err := io.ReadAll(r.Body)
 		if err != nil {
 			http.Error(w, "Error reading request body", http.StatusInternalServerError)
+			return
+		}
+		if len(l.Players) == consts.MAX_PLAYER {
+			http.Error(w, "The number of players is limited to 4", http.StatusBadRequest)
 			return
 		}
 
