@@ -4,4 +4,4 @@ WORKDIR /app
 
 ADD ./src .
 
-CMD ["go","run","/app/src/main.go"]
+CMD ["go","run","/app/src/."]
