@@ -17,7 +17,7 @@ func (pc *PlayerConverter) Convert(originalPlayer *player.Player) *ConvertedPlay
 			NewConvertedCard(suit.ConvertSuitToString(card.Suit), rank.ConvertRankToString(card.Rank)),
 		)
 	}
-	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name.Value, originalPlayer.InRound, originalPlayer.IsStand, convertedHand, originalPlayer.IsBust())
+	return NewConvertedPlayer(originalPlayer.Id, originalPlayer.Name.Value, originalPlayer.InRound, originalPlayer.IsStand, convertedHand, originalPlayer.IsBust(), originalPlayer.GetHandTotal())
 }
 
 type ConvertedCard struct {
@@ -26,12 +26,13 @@ type ConvertedCard struct {
 }
 
 type ConvertedPlayer struct {
-	Id      player.PlayerId
-	Name    string
-	InTable bool
-	IsStand bool
-	Hand    []*ConvertedCard
-	IsBust  bool
+	Id        player.PlayerId
+	Name      string
+	InTable   bool
+	IsStand   bool
+	Hand      []*ConvertedCard
+	IsBust    bool
+	TotalHand int
 }
 
 func NewPlayerConverter() *PlayerConverter {
@@ -45,14 +46,16 @@ func NewConvertedPlayer(
 	isStand bool,
 	hand []*ConvertedCard,
 	isBust bool,
+	totalHand int,
 ) *ConvertedPlayer {
 	return &ConvertedPlayer{
-		Name:    name,
-		Id:      id,
-		InTable: inTable,
-		IsStand: isStand,
-		Hand:    hand,
-		IsBust:  isBust,
+		Name:      name,
+		Id:        id,
+		InTable:   inTable,
+		IsStand:   isStand,
+		Hand:      hand,
+		IsBust:    isBust,
+		TotalHand: totalHand,
 	}
 }
 
