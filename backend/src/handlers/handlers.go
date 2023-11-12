@@ -14,7 +14,7 @@ func CreateJsonResponseFromCard(w http.ResponseWriter, Card *card.Card) {
 		return
 	}
 	w.Header().Set("Content-Type", "application/json")
-	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173/")
+	w.Header().Set("Access-Control-Allow-Origin", "http://127.0.0.1:5173")
 	w.WriteHeader(http.StatusOK)
 	w.Write(jsonData)
 }
