@@ -3,6 +3,7 @@ package main
 import (
 	"casino/handlers/actionHandler"
 	"casino/handlers/createNewPlayerHandler"
+	"casino/handlers/getLobbyHandler"
 	"casino/handlers/getPlayerHandler"
 	"casino/handlers/getResultHandler"
 	"casino/handlers/getRoundHandler.go"
@@ -19,6 +20,9 @@ func main() {
 	})
 	http.HandleFunc("/api/lobby/start", func(w http.ResponseWriter, r *http.Request) {
 		startRoundHandler.StartRoundHandler(w, r, lobby)
+	})
+	http.HandleFunc("/api/lobby", func(w http.ResponseWriter, r *http.Request) {
+		getLobbyHandler.GetLobbyHandler(w, r, lobby)
 	})
 	http.HandleFunc("/api/round/action", func(w http.ResponseWriter, r *http.Request) {
 		actionHandler.ActionHandler(w, r, lobby.Round)
