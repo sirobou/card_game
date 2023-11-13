@@ -5,7 +5,5 @@ export const convertRank = (rank: RankKey): Rank => {
 }
 
 export const convertCardImage = (card: Card): CardImage => {
-  return `${card.rank.toLowerCase() as Lowercase<Rank>}_of_${
-    card.suit.toLowerCase() as Lowercase<Suit>
-  }s.svg`
+  return `${card.suit.toLowerCase() as Lowercase<Suit>}_${card.rank.toLowerCase() as Lowercase<Rank>}.svg`
 }

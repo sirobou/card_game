@@ -18,7 +18,7 @@ export type RankKey = keyof typeof rankTable
 export type Rank = (typeof rankTable)[RankKey]
 export type Suit = "Spade" | "Heart" | "Club" | "Diamond"
 
-export type CardImage = `${Lowercase<Rank>}_of_${Lowercase<Suit>}s.svg`
+export type CardImage = `${Lowercase<Suit>}_${Lowercase<Rank>}.svg`
 
 export type Card = {
   rank: Rank
