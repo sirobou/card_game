@@ -1,6 +1,7 @@
 package getLobbyHandler
 
 import (
+	"casino/handlers/converter"
 	"casino/handlers/serializer"
 	"casino/model/lobby"
 	"fmt"
@@ -14,7 +15,8 @@ func GetLobbyHandler(w http.ResponseWriter, r *http.Request, l *lobby.Lobby) {
 }
 
 func CreateJsonResponseFromLobby(w http.ResponseWriter, l lobby.Lobby) {
-	var lobbySerializer serializer.Serializer[lobby.Lobby] = serializer.NewLobbySerialiezr()
+	playerConverter := converter.NewPlayerConverter()
+	var lobbySerializer serializer.Serializer[lobby.Lobby] = serializer.NewLobbySerialiezr(playerConverter)
 	jsonData, err := lobbySerializer.Serialize(l)
 	if err != nil {
 		fmt.Println("JSONエンコードエラー:", err)
