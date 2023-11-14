@@ -1,7 +1,7 @@
 import { Player, Dealer } from "@/types/Player"
 
 export const CardColor = (player: Player | Dealer) => {
-  if (player.isBust) {
+  if (player.hasOwnProperty("isBust") && (player as Player).isBust) {
     return "#FFCDD2"
   }
 
