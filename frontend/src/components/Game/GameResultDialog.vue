@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { defineProps, ref, onMounted } from "vue"
+import { ref, onMounted, onBeforeMount } from "vue"
 import GameResultDialogRow from "@/components/Game/GameResultDialogRow.vue"
 import { BASE_URL } from "@/consts/const"
 import { ResultDealer, ResultPlayer } from "@/types/Player"
@@ -12,8 +12,10 @@ const props = defineProps<{
 
 const dealer = ref<ResultDealer | null>(null)
 const players = ref<ResultPlayer[]>([])
+const setIntervalId = ref<number | null>(null)
 
 onMounted(async () => {
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   const resp = await fetch(`${BASE_URL}/api/round/result`)
   const res = await resp.json()
   dealer.value = toResultDealer(res.Dealer)
@@ -23,10 +25,16 @@ onMounted(async () => {
 const pushLobby = () => {
   router.push("/lobby")
 }
+
+onBeforeMount(() => {
+  if (setIntervalId.value) {
+    window.clearInterval(setIntervalId.value)
+  }
+})
 </script>
 
 <template>
-  <v-dialog v-model="props.dialog" :max-width="'90vw'">
+  <v-dialog v-model="props.dialog" :max-width="'70vw'">
     <v-card>
       <v-container>
         <GameResultDialogRow v-if="dealer" :is-dealer="true" :player="dealer" />
