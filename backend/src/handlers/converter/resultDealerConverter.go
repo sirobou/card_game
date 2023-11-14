@@ -16,24 +16,28 @@ func (rdc *ResultDealerConverter) Convert(originalDealer *dealer.Dealer) *Conver
 			NewConvertedCard(suit.ConvertSuitToString(card.Suit), rank.ConvertRankToString(card.Rank)),
 		)
 	}
-	return NewConvertedResultDealer(convertedHand, originalDealer.IsBust(), originalDealer.IsStand())
+	return NewConvertedResultDealer(convertedHand, originalDealer.IsBust(), originalDealer.IsStand(), originalDealer.GetHandTotal())
 }
 
 type ConvertedResultDealer struct {
-	Hand    []*ConvertedCard
-	IsBust  bool
-	IsStand bool
+	Hand      []*ConvertedCard
+	IsBust    bool
+	IsStand   bool
+	TotalHand int
 }
 
 func NewConvertedResultDealer(
 	hand []*ConvertedCard,
 	isBust bool,
 	isStand bool,
+	totalHand int,
+
 ) *ConvertedResultDealer {
 	return &ConvertedResultDealer{
-		Hand:    hand,
-		IsBust:  isBust,
-		IsStand: isStand,
+		Hand:      hand,
+		IsBust:    isBust,
+		IsStand:   isStand,
+		TotalHand: totalHand,
 	}
 }
 
