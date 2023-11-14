@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { defineProps } from "vue"
 import { Card } from "@/types/Card"
 import { convertCardImage } from "@/utils/Card"
 

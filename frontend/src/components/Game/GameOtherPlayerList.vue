@@ -1,29 +1,16 @@
 <script setup lang="ts">
 import GameOtherPlayerListItem from "@/components/Game/GameOtherPlayerListItem.vue"
-import { defineProps } from "vue"
-import { Player, SuitIcon } from "@/types/Player"
+import { computed } from "vue"
+import { Player } from "@/types/Player"
+import { playersWithIcon } from "@/utils/Player"
 
 type Props = {
   players: Player[]
   currentPlayer: Player["id"]
 }
 
-const { players } = defineProps<Props>()
-const playerWithIcons = players.map<Player & { icon: SuitIcon }>(
-  (player, i) => {
-    const icon: SuitIcon[] = [
-      "mdi-cards-playing-spade",
-      "mdi-cards-playing-heart",
-      "mdi-cards-playing-club",
-      "mdi-cards-playing-diamond",
-    ]
-
-    return {
-      ...player,
-      icon: icon[i % icon.length],
-    }
-  }
-)
+const props = defineProps<Props>()
+const playerWithIcons = computed(() => playersWithIcon(props.players))
 </script>
 
 <template>

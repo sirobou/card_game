@@ -4,6 +4,10 @@ import {
   PlayerFromApi,
   DealerFromApi,
   Dealer,
+  ResultPlayerFromApi,
+  ResultPlayer,
+  ResultDealerFromApi,
+  ResultDealer,
 } from "@/types/Player"
 import { Suit } from "@/types/Card"
 import { toCard } from "@/utils/Card"
@@ -52,5 +56,24 @@ export const toDealer = (DealerFromApi: DealerFromApi): Dealer => {
     publicHand: toCard(DealerFromApi.PublicHand),
     handCount: DealerFromApi.HandCount,
     isStand: DealerFromApi.IsStand,
+  }
+}
+
+export const toResultPlayer = (
+  resultPlayerFromApi: ResultPlayerFromApi
+): ResultPlayer => {
+  return {
+    ...toPlayer(resultPlayerFromApi),
+    isWin: resultPlayerFromApi.IsWin,
+  }
+}
+
+export const toResultDealer = (
+  resultDealerFromApi: ResultDealerFromApi
+): ResultDealer => {
+  return {
+    hand: resultDealerFromApi.Hand.map((card) => toCard(card)),
+    isBust: resultDealerFromApi.IsBust,
+    score: resultDealerFromApi.TotalHand,
   }
 }

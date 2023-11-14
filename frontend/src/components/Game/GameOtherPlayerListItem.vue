@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import Card from "@/components/Card.vue"
 import { Player, SuitIcon } from "@/types/Player"
-import { defineProps } from "vue"
 import { CardColor } from "@/utils/Color"
 
 type Props = {
@@ -9,26 +8,29 @@ type Props = {
   hasTurn: boolean
 }
 
-const { player, hasTurn } = defineProps<Props>()
+const props = defineProps<Props>()
 </script>
 
 <template>
-  <v-card :class="hasTurn && 'v-card--turn-holder'" :color="CardColor(player)">
+  <v-card
+    :class="props.hasTurn && 'v-card--turn-holder'"
+    :color="CardColor(props.player)"
+  >
     <template v-slot:title>
-      <v-chip v-if="player.isBust" color="error" variant="elevated"
+      <v-chip v-if="props.player.isBust" color="error" variant="elevated"
         >BUSTED</v-chip
       >
-      <v-chip v-if="player.isStand" color="primary" variant="elevated"
+      <v-chip v-if="props.player.isStand" color="primary" variant="elevated"
         >STAND</v-chip
       >
 
-      <v-icon color="secondary">{{ player.icon }}</v-icon>
-      <span class="player-name">{{ player.name }}</span>
-      <span class="player-score">score: {{ player.score }}</span>
+      <v-icon color="secondary">{{ props.player.icon }}</v-icon>
+      <span class="player-name">{{ props.player.name }}</span>
+      <span class="player-score">score: {{ props.player.score }}</span>
     </template>
 
     <div class="hand">
-      <span v-for="card in player.hand">
+      <span v-for="card in props.player.hand">
         <Card :card="card" :size="5" />
       </span>
     </div>

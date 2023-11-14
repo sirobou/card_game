@@ -1,12 +1,10 @@
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 type Props = {
-  size: number;
-};
+  size: number
+}
 
-const props = defineProps<Props>();
-const setSize = (size: number) => `${size}rem`;
+const props = defineProps<Props>()
+const setSize = (size: number) => `${size}rem`
 </script>
 
 <template>

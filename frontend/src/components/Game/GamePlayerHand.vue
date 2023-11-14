@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import Card from "@/components/Card.vue"
 import { Card as Card_t } from "@/types/Card"
-import { defineProps } from "vue"
-
 type Props = {
   hand: Card_t[]
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Player } from "@/types/Player"
-import { defineProps } from "vue"
 import GamePlayerActionForm from "@/components/Game/GamePlayerActionForm.vue"
 import GamePlayerHand from "@/components/Game/GamePlayerHand.vue"
 import { CardColor } from "@/utils/Color"
@@ -10,27 +9,41 @@ type Props = {
   hasTurn: boolean
 }
 
-const { player, hasTurn } = defineProps<Props>()
+const props = defineProps<Props>()
+type Emit = {
+  action: [param: "hit" | "stand"]
+}
+
+const emit = defineEmits<Emit>()
+const hit = () => emit("action", "hit")
+const stand = () => emit("action", "stand")
 </script>
 
 <template>
-  <v-card :class="hasTurn && 'v-card--turn-holder'" :color="CardColor(player)">
+  <v-card
+    :class="props.hasTurn && 'v-card--turn-holder'"
+    :color="CardColor(props.player)"
+  >
     <v-container>
       <v-row align="center" justify="center">
-        <v-chip v-if="player.isBust" color="error" variant="elevated"
+        <v-chip v-if="props.player.isBust" color="error" variant="elevated"
           >BUSTED</v-chip
         >
-        <v-chip v-if="player.isStand" color="primary" variant="elevated"
+        <v-chip v-if="props.player.isStand" color="primary" variant="elevated"
           >STAND</v-chip
         >
-        <span class="player-name">{{ player.name }}</span>
-        <span class="player-score">score: {{ player.score }}</span>
+        <span class="player-name">{{ props.player.name }}</span>
+        <span class="player-score">score: {{ props.player.score }}</span>
       </v-row>
       <v-row align="center" justify="center">
-        <GamePlayerActionForm />
+        <GamePlayerActionForm
+          @hit="hit"
+          @stand="stand"
+          :disabled="props.player.isStand || props.player.isBust"
+        />
       </v-row>
       <v-row align="center" justify="center">
-        <GamePlayerHand :hand="player.hand" />
+        <GamePlayerHand :hand="props.player.hand" />
       </v-row>
     </v-container>
   </v-card>

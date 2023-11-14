@@ -32,3 +32,17 @@ export type Dealer = {
   handCount: number
   isStand: boolean
 }
+
+export type ResultPlayerFromApi = PlayerFromApi & { IsWin: boolean }
+export type ResultPlayer = Player & { isWin: boolean }
+
+export type ResultDealerFromApi = {
+  Hand: CardFromApi[]
+  IsBust: boolean
+  TotalHand: number
+}
+export type ResultDealer = {
+  hand: Card[]
+  isBust: boolean
+  score: number
+}
