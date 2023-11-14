@@ -41,7 +41,7 @@ const playerWithIcons = players.map<Player & { icon: SuitIcon }>(
 .player-container {
   height: 100%;
   max-width: 40rem;
-  min-width: 25rem;
+  min-width: 20rem;
   *:nth-child(n) {
     margin-bottom: 0.5rem;
   }

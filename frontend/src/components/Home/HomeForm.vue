@@ -16,8 +16,12 @@ const isButtonDisabled = computed(() =>
   rules.some((rule) => rule(name.value) !== true)
 )
 
+type Emit = {
+  submit: [name: string]
+}
+const emit = defineEmits<Emit>()
 const submit = () => {
-  alert(`プレイヤー名: ${name.value}`)
+  emit("submit", name.value)
 }
 </script>
 

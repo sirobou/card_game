@@ -13,7 +13,7 @@ const props = defineProps<Props>()
 <template>
   <div class="hand">
     <span v-for="card in props.hand">
-      <Card :card="card" :size="10" />
+      <Card :card="card" :size="9.5" />
     </span>
   </div>
 </template>

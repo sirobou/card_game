@@ -22,7 +22,7 @@ const { player, hasTurn } = defineProps<Props>()
         >STAND</v-chip
       >
 
-      <v-icon size="x-large" color="secondary">{{ player.icon }}</v-icon>
+      <v-icon color="secondary">{{ player.icon }}</v-icon>
       <span class="player-name">{{ player.name }}</span>
       <span class="player-score">score: {{ player.score }}</span>
     </template>

@@ -21,10 +21,8 @@ const { dealer } = defineProps<Props>()
       <div>Dealer</div>
     </template>
     <div class="dealer-hand">
-      <Card :card="dealer.publicHand" :size="10" />
-      <span v-for="_ in new Array(dealer.handCount - 1)">
-        <CardBack :size="10" />
-      </span>
+      <Card :card="dealer.publicHand" :size="9.5" />
+      <CardBack v-for="_ in new Array(dealer.handCount - 1)" :size="9.5" />
     </div>
   </v-card>
 </template>
@@ -37,7 +35,7 @@ const { dealer } = defineProps<Props>()
   height: 100%;
   padding-top: 1rem;
   padding-left: 1rem;
-  padding-right: 1rem;
+  padding-right: 0.5rem;
   padding-bottom: 1rem;
 }
 
@@ -45,7 +43,7 @@ const { dealer } = defineProps<Props>()
   display: flex;
   flex-wrap: wrap;
   *:nth-child(n) {
-    margin-left: 0.2rem;
+    margin-right: 0.5rem;
   }
 }
 </style>

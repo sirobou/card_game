@@ -48,8 +48,10 @@ const { player, hasTurn } = defineProps<Props>()
   }
 }
 .v-container {
-  *:nth-child(n) {
-    margin-bottom: 0.5rem;
+  * {
+    .v-row:nth-child(2) {
+      margin-bottom: 0.1rem;
+    }
   }
 }
 
