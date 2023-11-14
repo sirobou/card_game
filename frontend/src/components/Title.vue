@@ -1,12 +1,20 @@
 <template>
-  <h1>Black Jack</h1>
+  <div>
+    <img src="black_jack_logo.svg" />
+  </div>
 </template>
 
 <style scoped lang="scss">
-h1 {
-  // font-family: "Bebas Neue";
-  font-size: 5rem;
-  text-align: center;
+div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+img {
+  width: 30rem;
   margin: 0;
   padding: 0;
 }

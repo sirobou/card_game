@@ -5,7 +5,7 @@ import LobbyButton from "@/components/Lobby/LobbyButton.vue"
 import LobbyPlayerCard from "@/components/Lobby/LobbyPlayerCard.vue"
 import { BASE_URL } from "@/consts/const"
 import { Player } from "@/types/Player"
-import { playersWithIcon } from "@/utils/Player"
+import { playersWithIcon, toPlayer } from "@/utils/Player"
 import router from "@/router"
 
 const players = ref<Player[]>([])
@@ -16,7 +16,8 @@ onMounted(async () => {
   setIntervalID.value = window.setInterval(async () => {
     const resp = await fetch(`${BASE_URL}/api/lobby`)
     if (resp.ok) {
-      players.value = await resp.json()
+      const res = await resp.json()
+      players.value = res.map(toPlayer)
     } else {
       console.error(resp)
     }
