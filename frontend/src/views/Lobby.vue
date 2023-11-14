@@ -52,7 +52,7 @@ const startGame = async () => {
     </v-row>
     <v-row>
       <v-col class="start-btn">
-        <LobbyButton @push="startGame" />
+        <LobbyButton @click="startGame" />
       </v-col>
     </v-row>
   </v-container>

@@ -1,5 +1,12 @@
-import { Player, SuitIcon } from "@/types/Player"
+import {
+  Player,
+  SuitIcon,
+  PlayerFromApi,
+  DealerFromApi,
+  Dealer,
+} from "@/types/Player"
 import { Suit } from "@/types/Card"
+import { toCard } from "@/utils/Card"
 
 export const convertToIcon = (suit: Suit): SuitIcon => {
   return `mdi-cards-playing-${suit.toLowerCase() as Lowercase<Suit>}`
@@ -27,4 +34,23 @@ export const playersWithIcon = (
       icon: suitIcons[index % 4],
     }
   })
+}
+
+export const toPlayer = (playerFromApi: PlayerFromApi): Player => {
+  return {
+    id: playerFromApi.Id,
+    name: playerFromApi.Name,
+    hand: playerFromApi.Hand.map((card) => toCard(card)),
+    score: playerFromApi.TotalHand,
+    isStand: playerFromApi.IsStand,
+    isBust: playerFromApi.IsBust,
+  }
+}
+
+export const toDealer = (DealerFromApi: DealerFromApi): Dealer => {
+  return {
+    publicHand: toCard(DealerFromApi.PublicHand),
+    handCount: DealerFromApi.HandCount,
+    isStand: DealerFromApi.IsStand,
+  }
 }

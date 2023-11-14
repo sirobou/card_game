@@ -1,63 +1,34 @@
 <script setup lang="ts">
+import { ref, onMounted, computed } from "vue"
 import { Player, Dealer } from "@/types/Player"
+import { toPlayer, toDealer } from "@/utils/Player"
 import GamePlayer from "@/components/Game/GamePlayer.vue"
 import GameOtherPlayerList from "@/components/Game/GameOtherPlayerList.vue"
 import GameDealer from "@/components/Game/GameDealer.vue"
+import { BASE_URL } from "@/consts/const"
 
-const player: Player = {
-  id: 0,
-  name: "player1",
-  hand: [
-    {
-      suit: "Spade",
-      rank: "Two",
-    },
-    {
-      suit: "Spade",
-      rank: "King",
-    },
-  ],
-  score: 21,
-  isStand: false,
-  isBust: false,
-}
+const players = ref<Player[]>([])
 
-const currentPlayer = 0
+const otherPlayers = computed(() =>
+  players.value.filter<Player>((p) => p.id !== localStorage.getItem("id"))
+)
+const player = computed(() =>
+  players.value.find((p) => p.id === localStorage.getItem("id"))
+)
 
-const dealer: Dealer = {
-  publicHand: {
-    suit: "Heart",
-    rank: "Three",
-  },
-  handCount: 5,
-  isStand: false,
-}
-
-const players = new Array(3).fill(null).map<Player>((_, i) => ({
-  id: i + 1,
-  name: `player${i}`,
-  hand: [
-    {
-      suit: "Spade",
-      rank: "Ace",
-    },
-    {
-      suit: "Spade",
-      rank: "King",
-    },
-    {
-      suit: "Spade",
-      rank: "Ace",
-    },
-    {
-      suit: "Spade",
-      rank: "King",
-    },
-  ],
-  score: 21,
-  isStand: false,
-  isBust: false,
-}))
+const currentPlayerId = ref<string>("")
+const dealer = ref<Dealer | null>(null)
+onMounted(async () => {
+  const resp = await fetch(`${BASE_URL}/api/round`)
+  if (resp.ok) {
+    const res = await resp.json()
+    players.value = res.Players.map(toPlayer)
+    currentPlayerId.value = res.CurrentPlayer
+    dealer.value = toDealer(res.Dealer)
+  } else {
+    console.log(resp)
+  }
+})
 </script>
 
 <template>
@@ -65,17 +36,21 @@ const players = new Array(3).fill(null).map<Player>((_, i) => ({
     <v-row>
       <v-col md="">
         <GameOtherPlayerList
-          :players="players"
-          :current-player="currentPlayer"
+          :players="otherPlayers"
+          :current-player="currentPlayerId"
         />
       </v-col>
 
       <v-col>
-        <GameDealer :dealer="dealer" />
+        <GameDealer v-if="dealer" :dealer="dealer" />
       </v-col>
     </v-row>
     <v-row justify="center">
-      <GamePlayer :player="player" :has-turn="player.id === currentPlayer" />
+      <GamePlayer
+        v-if="player"
+        :player="player"
+        :has-turn="player.id === currentPlayerId"
+      />
     </v-row>
   </v-container>
 </template>

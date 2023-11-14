@@ -2,15 +2,15 @@
 import { defineEmits } from "vue"
 
 type Emit = {
-  push: []
+  click: []
 }
 
 const emit = defineEmits<Emit>()
-const onPush = () => {
-  emit("push")
+const onClick = () => {
+  emit("click")
 }
 </script>
 
 <template>
-  <v-btn size="x-large" color="primary" @push="onPush">ゲーム開始</v-btn>
+  <v-btn size="x-large" color="primary" @click="onClick">ゲーム開始</v-btn>
 </template>

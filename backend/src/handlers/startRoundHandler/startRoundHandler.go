@@ -9,4 +9,5 @@ func StartRoundHandler(w http.ResponseWriter, r *http.Request, lobby *lobby.Lobb
 	if r.Method == http.MethodGet {
 		lobby.Round = lobby.StartRound()
 	}
+	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 }
