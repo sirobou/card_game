@@ -6,7 +6,8 @@ import (
 	"casino/handlers/getLobbyHandler"
 	"casino/handlers/getPlayerHandler"
 	"casino/handlers/getResultHandler"
-	"casino/handlers/getRoundHandler.go"
+	"casino/handlers/getRoundHandler"
+	"casino/handlers/resetLobbyHandler"
 	"casino/handlers/startRoundHandler"
 	"casino/model/lobby"
 	"casino/model/player"
@@ -37,6 +38,9 @@ func main() {
 	})
 	http.HandleFunc("/api/round/result", func(w http.ResponseWriter, r *http.Request) {
 		getResultHandler.GetResultHandler(w, r, lobby.Round)
+	})
+	http.HandleFunc("/api/lobby/reset", func(w http.ResponseWriter, r *http.Request) {
+		resetLobbyHandler.ResetLobbyHandler(w, r, lobby)
 	})
 	http.ListenAndServe("0.0.0.0:8080", nil)
 }
