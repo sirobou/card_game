@@ -3,7 +3,7 @@ import { Card, Suit } from "@/types/Card"
 export type SuitIcon = `mdi-cards-playing-${Lowercase<Suit>}`
 
 export type Player = {
-  id: number
+  id: string
   name: string
   hand: Card[]
   score: number
