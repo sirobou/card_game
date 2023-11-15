@@ -1,0 +1,1 @@
+import{_ as e}from"./Player-ea3467f4.js";import{d as _,o,h as t,e as a,_ as s}from"./index-e70186fd.js";const c=_({__name:"Title",setup(n){return(r,l)=>(o(),t("div",null,[a(e,{name:"black_jack_logo"})]))}});const i=s(c,[["__scopeId","data-v-d07fb08e"]]);export{i as T};
