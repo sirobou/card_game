@@ -42,5 +42,5 @@ func main() {
 	http.HandleFunc("/api/lobby/reset", func(w http.ResponseWriter, r *http.Request) {
 		resetLobbyHandler.ResetLobbyHandler(w, r, lobby)
 	})
-	http.ListenAndServe("0.0.0.0:80", nil)
+	http.ListenAndServe("0.0.0.0:8080", nil)
 }
