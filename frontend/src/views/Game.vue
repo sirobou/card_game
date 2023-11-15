@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch, onMounted, computed, onBeforeUnmount } from "vue"
+import { ref, onMounted, computed, onBeforeUnmount } from "vue"
 import { Player, Dealer } from "@/types/Player"
 import { toPlayer, toDealer } from "@/utils/Player"
 import GamePlayer from "@/components/Game/GamePlayer.vue"
