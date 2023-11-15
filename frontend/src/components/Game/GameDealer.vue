@@ -6,6 +6,7 @@ import { CardColor } from "@/utils/Color"
 
 type Props = {
   dealer: Dealer
+  is1on1: boolean
 }
 
 const props = defineProps<Props>()
@@ -14,12 +15,16 @@ const props = defineProps<Props>()
 <template>
   <v-card :color="CardColor(dealer)">
     <template v-slot:title>
-      <v-chip v-if="props.dealer.isStand" color="primary" variant="elevated"
-        >STAND</v-chip
-      >
-      <div>Dealer</div>
+      <div :class="props.is1on1 ? 'name-1on1' : ''">
+        <v-chip v-if="props.dealer.isStand" color="primary" variant="elevated"
+          >STAND</v-chip
+        >
+        <span>Dealer</span>
+      </div>
     </template>
-    <div class="dealer-hand">
+    <div
+      :class="props.is1on1 ? 'dealer-hand dealer-hand--1on1' : 'dealer-hand'"
+    >
       <Card :card="props.dealer.publicHand" :size="9.5" />
       <CardBack v-for="_ in new Array(dealer.handCount - 1)" :size="9.5" />
     </div>
@@ -44,5 +49,13 @@ const props = defineProps<Props>()
   *:nth-child(n) {
     margin-right: 0.5rem;
   }
+
+  &--1on1 {
+    justify-content: center;
+  }
+}
+
+.name-1on1 {
+  text-align: center;
 }
 </style>

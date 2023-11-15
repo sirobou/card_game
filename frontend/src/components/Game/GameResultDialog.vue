@@ -15,11 +15,16 @@ const players = ref<ResultPlayer[]>([])
 const setIntervalId = ref<number | null>(null)
 
 onMounted(async () => {
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-  const resp = await fetch(`${BASE_URL}/api/round/result`)
-  const res = await resp.json()
-  dealer.value = toResultDealer(res.Dealer)
-  players.value = res.Players.map(toResultPlayer)
+  setIntervalId.value = window.setInterval(async () => {
+    const resp = await fetch(`${BASE_URL}/api/round/result`)
+    const res = await resp.json()
+    dealer.value = toResultDealer(res.Dealer)
+    players.value = res.Players.map(toResultPlayer)
+
+    if (!(res.Players == null || res.Dealer == null) && setIntervalId.value) {
+      window.clearInterval(setIntervalId.value)
+    }
+  }, 1000)
 })
 
 const pushLobby = () => {

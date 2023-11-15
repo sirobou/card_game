@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, computed, onBeforeUnmount } from "vue"
+import { ref, watch, onMounted, computed, onBeforeUnmount } from "vue"
 import { Player, Dealer } from "@/types/Player"
 import { toPlayer, toDealer } from "@/utils/Player"
 import GamePlayer from "@/components/Game/GamePlayer.vue"
@@ -33,6 +33,10 @@ onMounted(async () => {
       currentPlayerId.value = res.CurrentPlayer
       dealer.value = toDealer(res.Dealer)
       isEnd.value = res.IsEnd
+
+      if (res.IsEnd && setIntervalId.value) {
+        window.clearInterval(setIntervalId.value)
+      }
     } else {
       console.log(resp)
     }
@@ -66,7 +70,7 @@ onBeforeUnmount(() => {
   <GameResultDialog :dialog="isEnd" />
   <v-container class="layout-root">
     <v-row>
-      <v-col>
+      <v-col v-if="otherPlayers.length !== 0">
         <GameOtherPlayerList
           :players="otherPlayers"
           :current-player="currentPlayerId"
@@ -74,7 +78,11 @@ onBeforeUnmount(() => {
       </v-col>
 
       <v-col>
-        <GameDealer v-if="dealer" :dealer="dealer" />
+        <GameDealer
+          v-if="dealer"
+          :dealer="dealer"
+          :is1on1="otherPlayers.length === 0"
+        />
       </v-col>
     </v-row>
     <v-row justify="center">
