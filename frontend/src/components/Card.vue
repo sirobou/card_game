@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import SVGElement from "@/components/SVGElement.vue"
 import { Card } from "@/types/Card"
 import { convertCardImage } from "@/utils/Card"
 
@@ -16,7 +17,7 @@ const setSize = (size: number) => `${size}rem`
 
 <template>
   <div>
-    <img :src="cardImage" />
+    <SVGElement :name="cardImage" />
   </div>
 </template>
 

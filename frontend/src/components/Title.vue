@@ -1,6 +1,10 @@
+<script setup lang="ts">
+import SVGElement from "@/components/SVGElement.vue"
+</script>
+
 <template>
   <div>
-    <img src="black_jack_logo.svg" />
+    <SVGElement name="black_jack_logo" />
   </div>
 </template>
 
