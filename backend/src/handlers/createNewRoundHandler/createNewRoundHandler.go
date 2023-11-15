@@ -26,6 +26,7 @@ func CreateJsonResponseFromNewGame(w http.ResponseWriter, round round.Round) {
 	}
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
+	w.Header().Set("Access-Control-Allow-Origin", "https://sirobou-casino.netlify.app")
 	w.WriteHeader(http.StatusOK)
 	w.Write(jsonData)
 }
