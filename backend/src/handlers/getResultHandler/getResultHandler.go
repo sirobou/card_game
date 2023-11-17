@@ -32,6 +32,7 @@ func CreateJsonResponseFromResult(w http.ResponseWriter, currentRound *round.Rou
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Allow-Origin", "http://localhost:5173")
 	w.Header().Set("Access-Control-Allow-Origin", "https://sirobou-casino.netlify.app")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST")
 
 	w.WriteHeader(http.StatusOK)
 	w.Write(jsonData)
